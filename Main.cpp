@@ -7,7 +7,10 @@
 #include "url.h"
 
 
+#ifndef USE_LIBUV
 #define USE_LIBUV 1
+#endif // !USE_LIBUV
+
 
 #ifdef WIN32
 #pragma comment( lib, "psapi.lib" )
