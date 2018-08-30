@@ -38,28 +38,18 @@ lws* connect(lws_context *ctx, const char *url);
 int main(int argc, char **argv)
 {
 
-    uv_loop_t *loop = uv_default_loop();
-    
+
     lws_context_creation_info createInfo = prepare_create_context();
     lws_context *ctx = lws_create_context(&createInfo);
 
-#if USE_LIBUV
-    lws_uv_initloop(ctx, loop, 0);
-#endif 
 
     lws *wsi = connect(ctx, "ws://invalid.url.com/", "invalid_protocol");
     
-#if USE_LIBUV
-    lws_uv_initloop(ctx, loop, 0);
-    uv_run(uv_default_loop(), UV_RUN_DEFAULT);
-#else
 
     while (true)
     {
         lws_service(ctx, 2);
     }
-#endif
-
 
     return 0;
 }
